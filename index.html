@@ -14,23 +14,44 @@
             text-align: center;
             overflow-x: hidden;
         }
+
+        .btn-start {
+            padding: 20px 40px;
+            font-size: 1.5em;
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
         header {
             padding: 20px;
             background-color: #ff6f61;
             color: white;
+            display: none;
         }
+
         header h1 {
             margin: 0;
             font-size: 2.5em;
         }
+
         section {
             padding: 20px;
+            display: none;
         }
+
         .heart {
             font-size: 5em;
             color: #ff6f61;
             animation: beat 1s infinite;
         }
+
         @keyframes beat {
             0%, 100% {
                 transform: scale(1);
@@ -39,11 +60,14 @@
                 transform: scale(1.2);
             }
         }
+
         .slideshow {
             margin: 20px auto;
             max-width: 600px;
             position: relative;
+            display: none;
         }
+
         .slideshow img {
             width: 100%;
             max-width: 600px;
@@ -52,14 +76,18 @@
             display: none;
             object-fit: contain;
         }
+
         .slideshow img.active {
             display: block;
         }
+
         footer {
             margin-top: 20px;
             padding: 10px;
             background-color: #ffd1c1;
+            display: none;
         }
+
         .snowflake {
             position: fixed;
             top: -10px;
@@ -67,6 +95,7 @@
             color: #ff6f61;
             animation: fall linear infinite;
         }
+
         @keyframes fall {
             0% {
                 transform: translateY(-10px);
@@ -77,40 +106,36 @@
                 opacity: 0;
             }
         }
+
         .special-message {
             display: none;
             font-size: 1.5em;
             color: #ff6f61;
             margin-top: 20px;
         }
-        .btn-reveal {
-            padding: 10px 20px;
-            font-size: 1em;
-            background-color: #ff6f61;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+
         .highlight {
             text-shadow: 0 0 10px #ff6f61, 0 0 20px #ff6f61;
         }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
+            const startButton = document.querySelector(".btn-start");
             const images = document.querySelectorAll(".slideshow img");
             let currentIndex = 0;
 
+            // Função para mostrar a próxima imagem do slideshow
             function showNextImage() {
                 images[currentIndex].classList.remove("active");
                 currentIndex = (currentIndex + 1) % images.length;
                 images[currentIndex].classList.add("active");
             }
 
+            // Exibir a primeira imagem
             images[currentIndex].classList.add("active");
-            setInterval(showNextImage, 5000);
+            setInterval(showNextImage, 5000); // Trocar imagem a cada 5 segundos
 
-            // Snowflake effect
+            // Efeito de queda de corações
             setInterval(() => {
                 const snowflake = document.createElement("div");
                 snowflake.className = "snowflake";
@@ -121,13 +146,15 @@
                 setTimeout(() => snowflake.remove(), 5000);
             }, 200);
 
-            // Reveal message
-            const btnReveal = document.querySelector(".btn-reveal");
-            const specialMessage = document.querySelector(".special-message");
-
-            btnReveal.addEventListener("click", () => {
-                specialMessage.style.display = "block";
-                btnReveal.style.display = "none";
+            // Ação do botão
+            startButton.addEventListener("click", () => {
+                // Esconde o botão e mostra o conteúdo
+                startButton.style.display = "none";
+                document.querySelector("header").style.display = "block";
+                document.querySelector("section").style.display = "block";
+                document.querySelector("footer").style.display = "block";
+                document.querySelector(".special-message").style.display = "block";
+                document.getElementById("background-music").play(); // Iniciar a música
             });
         });
     </script>
@@ -137,30 +164,15 @@
         <source src="ainda-bem.wav" type="audio/mpeg">
         Seu navegador não suporta o elemento de áudio.
     </audio>
-    <button id="toggle-music" style="margin-top: 20px; background-color: #ff6f61; color: white; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">
-        🎵 Tocar Música
-    </button>
-    
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const music = document.getElementById("background-music");
-            const toggleButton = document.getElementById("toggle-music");
-    
-            toggleButton.addEventListener("click", () => {
-                if (music.paused) {
-                    music.play();
-                    toggleButton.textContent = "🎵 Pausar Música";
-                } else {
-                    music.pause();
-                    toggleButton.textContent = "🎵 Tocar Música";
-                }
-            });
-        });
-    </script>
+
+    <!-- Botão de início -->
+    <button class="btn-start">Clique aqui para ver a mensagem</button>
+
     <header>
         <h1>Ananda ❤️ Filipe</h1>
         <p>10/08/2024 - 10/01/2025</p>
     </header>
+
     <section>
         <p class="heart">❤️</p>
         <p>Hoje celebramos <span class="highlight">5 meses</span> de amor, cumplicidade e alegria.</p>
@@ -173,16 +185,18 @@
         <p>Obrigado por cada momento compartilhado.</p>
         <p>Que venham muitos outros meses e anos juntos! Te amo! ❤️</p>
     </section>
-    <p class="heart">❤️</p>
+
     <section class="slideshow">
         <img src="foto1.jpeg" alt="Ananda e Filipe 1">
         <img src="foto2.jpeg" alt="Ananda e Filipe 2">
         <img src="foto3.jpeg" alt="Ananda e Filipe 3">
         <img src="foto4.jpeg" alt="Ananda e Filipe 4">
     </section>
+
     <p class="heart">❤️</p>
-    <button class="btn-reveal">Clique para revelar uma mensagem especial</button>
+
     <p class="special-message">Cada dia ao seu lado tem sido incrível! Você me faz bem de uma forma que eu nunca senti antes. Temos uma sintonia muito forte. Amo quando faz bullying comigo, ou quando faz piadas tóxicas, amo sua risada, seu cheiro. Eu tenho muita sorte de te ter comigo. Você é o maior presente que a vida me deu. Te amo para sempre! ❤️</p>
+
     <footer>
         <p>Com carinho, Filipe</p>
     </footer>
