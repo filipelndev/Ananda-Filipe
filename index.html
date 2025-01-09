@@ -12,6 +12,7 @@
             background: linear-gradient(135deg, #ff9a9e, #fad0c4);
             color: #333;
             text-align: center;
+            overflow-x: hidden;
         }
         header {
             padding: 20px;
@@ -59,6 +60,41 @@
             padding: 10px;
             background-color: #ffd1c1;
         }
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            font-size: 20px;
+            color: #ff6f61;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            0% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+        .special-message {
+            display: none;
+            font-size: 1.5em;
+            color: #ff6f61;
+            margin-top: 20px;
+        }
+        .btn-reveal {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .highlight {
+            text-shadow: 0 0 10px #ff6f61, 0 0 20px #ff6f61;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -73,17 +109,61 @@
 
             images[currentIndex].classList.add("active");
             setInterval(showNextImage, 5000);
+
+            // Snowflake effect
+            setInterval(() => {
+                const snowflake = document.createElement("div");
+                snowflake.className = "snowflake";
+                snowflake.textContent = "❤️";
+                snowflake.style.left = Math.random() * 100 + "vw";
+                snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+                document.body.appendChild(snowflake);
+                setTimeout(() => snowflake.remove(), 5000);
+            }, 200);
+
+            // Reveal message
+            const btnReveal = document.querySelector(".btn-reveal");
+            const specialMessage = document.querySelector(".special-message");
+
+            btnReveal.addEventListener("click", () => {
+                specialMessage.style.display = "block";
+                btnReveal.style.display = "none";
+            });
         });
     </script>
 </head>
 <body>
+    <audio id="background-music" autoplay loop>
+        <source src="ainda-bem.wav" type="audio/mpeg">
+        Seu navegador não suporta o elemento de áudio.
+    </audio>
+    <button id="toggle-music" style="margin-top: 20px; background-color: #ff6f61; color: white; border: none; border-radius: 5px; padding: 10px 20px; cursor: pointer;">
+        🎵 Tocar Música
+    </button>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const music = document.getElementById("background-music");
+            const toggleButton = document.getElementById("toggle-music");
+    
+            toggleButton.addEventListener("click", () => {
+                if (music.paused) {
+                    music.play();
+                    toggleButton.textContent = "🎵 Pausar Música";
+                } else {
+                    music.pause();
+                    toggleButton.textContent = "🎵 Tocar Música";
+                }
+            });
+        });
+    </script>
     <header>
         <h1>Ananda ❤️ Filipe</h1>
         <p>10/08/2024 - 10/01/2025</p>
     </header>
     <section>
         <p class="heart">❤️</p>
-        <p>Hoje celebramos 5 meses de amor, cumplicidade e alegria.</p>
+        <p>Hoje celebramos <span class="highlight">5 meses</span> de amor, cumplicidade e alegria.</p>
         <p>Cada dia tem sido algo especial, único e maravilhoso ao seu lado.</p>
         <p>Você é uma mulher única, incrível e eu tenho muita sorte de ter te encontrado.</p>
         <p>A distância só me mostra o quanto é importante te ter perto.</p>
@@ -101,6 +181,8 @@
         <img src="foto4.jpeg" alt="Ananda e Filipe 4">
     </section>
     <p class="heart">❤️</p>
+    <button class="btn-reveal">Clique para revelar uma mensagem especial</button>
+    <p class="special-message">Cada dia ao seu lado tem sido incrível! Você me faz bem de uma forma que eu nunca senti antes. Temos uma sintonia muito forte. Amo quando faz bullying comigo, ou quando faz piadas tóxicas, amo sua risada, seu cheiro. Eu tenho muita sorte de te ter comigo. Você é o maior presente que a vida me deu. Te amo para sempre! ❤️</p>
     <footer>
         <p>Com carinho, Filipe</p>
     </footer>
